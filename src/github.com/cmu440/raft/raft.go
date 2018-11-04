@@ -30,7 +30,11 @@ package raft
 //   same peer, via the applyCh channel passed to Make()
 //
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+	"time"
+)
 import "github.com/cmu440/rpc"
 
 //
@@ -56,11 +60,35 @@ type Raft struct {
 	mux   sync.Mutex       // Lock to protect shared access to this peer's state
 	peers []*rpc.ClientEnd // RPC end points of all peers
 	me    int              // this peer's index into peers[]
-
+	state int
+	// Persistent States
+	log         map[int]*LogEntries
+	currentTerm int
+	votedFor    int
+	// Volatile States
+	commitIndex int
+	lastApplied int
+	// Leader States
+	nextIndex  []int
+	matchIndex []int
+	//Channels
+	timeoutchan   chan bool
+	votereplychan chan *RequestVoteReply
+	heatbeat      chan *AppendEntriesArgs
 	// Your data here (2A, 2B).
 	// Look at the Raft paper's Figure 2 for a description of what
 	// state a Raft peer should maintain
+}
 
+const (
+	Followers = iota + 1
+	Leader
+	Candidates
+)
+
+type LogEntries struct {
+	term  int
+	index int
 }
 
 //
@@ -71,10 +99,15 @@ type Raft struct {
 // believes it is the leader
 //
 func (rf *Raft) GetState() (int, int, bool) {
-
 	var me int
 	var term int
 	var isleader bool
+	me = rf.me
+	term = rf.currentTerm
+	isleader = false
+	if rf.state == Leader {
+		isleader = true
+	}
 	// Your code here (2A)
 	return me, term, isleader
 }
@@ -91,6 +124,10 @@ func (rf *Raft) GetState() (int, int, bool) {
 //
 type RequestVoteArgs struct {
 	// Your data here (2A, 2B)
+	Term         int
+	CandidateID  int
+	LastLogIndex int
+	LastLogTerm  int
 }
 
 //
@@ -106,6 +143,8 @@ type RequestVoteArgs struct {
 //
 type RequestVoteReply struct {
 	// Your data here (2A)
+	Term        int
+	VoteGranted bool
 }
 
 //
@@ -116,6 +155,34 @@ type RequestVoteReply struct {
 //
 func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	// Your code here (2A, 2B)
+	if args.Term < rf.currentTerm {
+		reply.VoteGranted = false
+		reply.Term = rf.currentTerm
+	}
+	if rf.votedFor == 0 || rf.votedFor == args.CandidateID {
+		if rf.currentTerm == args.Term {
+			reply.VoteGranted = true
+			rf.votedFor = args.CandidateID
+			reply.Term = args.Term
+		} else {
+			rf.currentTerm = args.Term
+			reply.VoteGranted = true
+			rf.votedFor = args.CandidateID
+			reply.Term = args.Term
+
+		}
+	} else { // rf.votedFor!=0&&rf.votedFor!=args.CandidateID
+		if rf.currentTerm == args.Term {
+			reply.VoteGranted = false
+			reply.Term = args.Term
+		} else {
+			rf.currentTerm = args.Term
+			reply.VoteGranted = true
+			rf.votedFor = args.CandidateID
+			reply.Term = args.Term
+		}
+	}
+
 }
 
 //
@@ -164,6 +231,39 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 //
 func (rf *Raft) sendRequestVote(peer int, args *RequestVoteArgs, reply *RequestVoteReply) bool {
 	ok := rf.peers[peer].Call("Raft.RequestVote", args, reply)
+	return ok
+}
+
+type AppendEntriesArgs struct {
+	// Your data here (2A)
+	Term         int
+	LeaderId     int
+	PrevLogIndex int
+	PrevLogTerm  int
+	Entry        string
+	LeaderCommit int
+}
+
+type AppendEntriesReply struct {
+	// Your data here (2A)
+	Term    int
+	Success bool
+}
+
+func (rf *Raft) AppendEntries(peer int, args *AppendEntriesArgs, reply *AppendEntriesReply) {
+	if args.Term < rf.currentTerm {
+		reply.Success = false
+		reply.Term = rf.currentTerm
+	}
+	if len(args.Entry) == 0 {
+		reply.Success = true
+		reply.Term = rf.currentTerm
+		rf.heatbeat <- args
+	}
+}
+
+func (rf *Raft) sendAppendEntries(peer int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
+	ok := rf.peers[peer].Call("Raft.AppendEntries", args, reply)
 	return ok
 }
 
@@ -240,8 +340,121 @@ func Make(peers []*rpc.ClientEnd, me int, applyCh chan ApplyMsg) *Raft {
 	rf := &Raft{}
 	rf.peers = peers
 	rf.me = me
-
 	// Your initialization code here (2A, 2B)
+	rf.state = Followers
+	rf.log = make(map[int]*LogEntries)
+	rf.currentTerm = 0
+	rf.votedFor = 0
 
+	rf.commitIndex = 0
+	rf.lastApplied = 0
+	rf.nextIndex = make([]int, len(peers))
+	rf.matchIndex = make([]int, len(peers))
+
+	rf.timeoutchan = make(chan bool)
+	rf.votereplychan = make(chan *RequestVoteReply)
+	go rf.MainRoutine()
 	return rf
 }
+
+func (rf *Raft) MainRoutine() {
+	for {
+		switch rf.state {
+		case Followers:
+			fmt.Println(rf.me,"Followers")
+			quit := false
+			FollowerTimer := time.NewTimer(500 * time.Duration(time.Millisecond))
+			for {
+				select {
+				case heartbeat := <-rf.heatbeat:
+					if heartbeat.Term > rf.currentTerm {
+						rf.currentTerm = heartbeat.Term
+					}
+					FollowerTimer.Reset(500 * time.Duration(time.Millisecond))
+				case <-FollowerTimer.C:
+					rf.state = Candidates
+					quit = true
+					break
+				}
+				if quit == true {
+					break
+				}
+			}
+
+		case Leader:
+			fmt.Println(rf.me,"Leader")
+			//LeaderTimer:=time.NewTimer(500*time.Duration(time.Millisecond))
+			heartbeat := &AppendEntriesArgs{
+				Term:         rf.currentTerm,
+				LeaderId:     rf.me,
+				Entry:        "",
+				PrevLogIndex: 0,
+				PrevLogTerm:  0,
+				LeaderCommit: 0,
+			}
+			for index := 0; index < len(rf.peers); index++ {
+				if index != rf.me {
+					var Receiver AppendEntriesReply
+					go rf.sendAppendEntries(index, heartbeat, &Receiver)
+				}
+			}
+		case Candidates:
+			fmt.Println(rf.me,"Candidate")
+			rf.currentTerm++ //Increment Current Term
+			vote := 1        //Vote for Self!
+			RequestVoteArgs := &RequestVoteArgs{
+				Term:        rf.currentTerm,
+				CandidateID: rf.me,
+			}
+
+			for index := 0; index < len(rf.peers); index++ {
+				if index != rf.me {
+					var RequestVoteReply RequestVoteReply
+					go rf.sendRequestVote(index, RequestVoteArgs, &RequestVoteReply)
+				}
+			}
+			//Reset Timer
+			CandidatesTimer := time.NewTimer(500 * time.Duration(time.Millisecond))
+			quit := false
+			for {
+				select {
+				case heartbeat := <-rf.heatbeat:
+					if heartbeat.Term > rf.currentTerm {
+						rf.currentTerm = heartbeat.Term
+						rf.state = Followers
+						quit = true
+						break
+					}
+
+				case RequestVoteReply := <-rf.votereplychan:
+					if RequestVoteReply.Term > rf.currentTerm {
+						rf.state = Followers
+						rf.currentTerm = RequestVoteReply.Term
+						quit = true
+						break
+					} else {
+						if RequestVoteReply.VoteGranted {
+							vote++
+						}
+						if vote > 1/2*len(rf.peers) {
+							rf.state = Leader
+							quit = true
+							break
+						}
+					}
+
+				case <-CandidatesTimer.C:
+					//Timeout
+					//vote=1
+					quit = true
+					break
+				}
+				if quit == true {
+					break
+				}
+			}
+		}
+
+	}
+}
+
