@@ -31,6 +31,7 @@ package raft
 //
 
 import (
+	"fmt"
 	"sync"
 	"time"
 )
@@ -352,6 +353,7 @@ func Make(peers []*rpc.ClientEnd, me int, applyCh chan ApplyMsg) *Raft {
 
 	rf.timeoutchan = make(chan bool)
 	rf.votereplychan = make(chan *RequestVoteReply)
+	go rf.MainRoutine()
 	return rf
 }
 
@@ -359,6 +361,7 @@ func (rf *Raft) MainRoutine() {
 	for {
 		switch rf.state {
 		case Followers:
+			fmt.Println(rf.me,"Followers")
 			quit := false
 			FollowerTimer := time.NewTimer(500 * time.Duration(time.Millisecond))
 			for {
@@ -379,6 +382,7 @@ func (rf *Raft) MainRoutine() {
 			}
 
 		case Leader:
+			fmt.Println(rf.me,"Leader")
 			//LeaderTimer:=time.NewTimer(500*time.Duration(time.Millisecond))
 			heartbeat := &AppendEntriesArgs{
 				Term:         rf.currentTerm,
@@ -395,25 +399,33 @@ func (rf *Raft) MainRoutine() {
 				}
 			}
 		case Candidates:
-
+			fmt.Println(rf.me,"Candidate")
 			rf.currentTerm++ //Increment Current Term
 			vote := 1        //Vote for Self!
 			RequestVoteArgs := &RequestVoteArgs{
 				Term:        rf.currentTerm,
 				CandidateID: rf.me,
 			}
-			//Reset Timer
-			CandidatesTimer := time.NewTimer(500 * time.Duration(time.Millisecond))
+
 			for index := 0; index < len(rf.peers); index++ {
 				if index != rf.me {
 					var RequestVoteReply RequestVoteReply
 					go rf.sendRequestVote(index, RequestVoteArgs, &RequestVoteReply)
 				}
 			}
-
+			//Reset Timer
+			CandidatesTimer := time.NewTimer(500 * time.Duration(time.Millisecond))
 			quit := false
 			for {
 				select {
+				case heartbeat := <-rf.heatbeat:
+					if heartbeat.Term > rf.currentTerm {
+						rf.currentTerm = heartbeat.Term
+						rf.state = Followers
+						quit = true
+						break
+					}
+
 				case RequestVoteReply := <-rf.votereplychan:
 					if RequestVoteReply.Term > rf.currentTerm {
 						rf.state = Followers
@@ -430,13 +442,7 @@ func (rf *Raft) MainRoutine() {
 							break
 						}
 					}
-				case heartbeat := <-rf.heatbeat:
-					if heartbeat.Term > rf.currentTerm {
-						rf.currentTerm = heartbeat.Term
-						rf.state = Followers
-						quit = true
-						break
-					}
+
 				case <-CandidatesTimer.C:
 					//Timeout
 					//vote=1
