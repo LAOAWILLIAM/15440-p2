@@ -31,7 +31,7 @@ package raft
 //
 
 import (
-	"fmt"
+	"math/rand"
 	"sync"
 	"time"
 )
@@ -102,12 +102,15 @@ func (rf *Raft) GetState() (int, int, bool) {
 	var me int
 	var term int
 	var isleader bool
+	rf.mux.Lock()
 	me = rf.me
 	term = rf.currentTerm
 	isleader = false
+
 	if rf.state == Leader {
 		isleader = true
 	}
+	rf.mux.Unlock()
 	// Your code here (2A)
 	return me, term, isleader
 }
@@ -153,34 +156,51 @@ type RequestVoteReply struct {
 //
 // Example RequestVote RPC handler
 //
+
 func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	// Your code here (2A, 2B)
+	//fmt.Println("11111")
+	rf.mux.Lock()
+	defer rf.mux.Unlock()
 	if args.Term < rf.currentTerm {
 		reply.VoteGranted = false
 		reply.Term = rf.currentTerm
-	}
-	if rf.votedFor == 0 || rf.votedFor == args.CandidateID {
-		if rf.currentTerm == args.Term {
-			reply.VoteGranted = true
-			rf.votedFor = args.CandidateID
-			reply.Term = args.Term
-		} else {
-			rf.currentTerm = args.Term
-			reply.VoteGranted = true
-			rf.votedFor = args.CandidateID
-			reply.Term = args.Term
+		return
+	} else {
+		if rf.votedFor == -1 || rf.votedFor == args.CandidateID {
+			if rf.currentTerm == args.Term {
+				//fmt.Println("000")
+				reply.VoteGranted = true
+				rf.votedFor = args.CandidateID
+				reply.Term = args.Term
+				return
+			} else { //args.Term > rf.currentTerm
+				//fmt.Println("111")
+				rf.currentTerm = args.Term
+				reply.VoteGranted = true
+				rf.votedFor = args.CandidateID
+				reply.Term = args.Term
+				return
 
+			}
+		} else { // rf.votedFor!=-1&&rf.votedFor!=args.CandidateID
+			if rf.currentTerm == args.Term {
+				//fmt.Println("222")
+				reply.VoteGranted = false
+				reply.Term = args.Term
+				return
+
+			} else { //args.Term > rf.currentTerm
+				//fmt.Println("333")
+				rf.currentTerm = args.Term
+				reply.VoteGranted = true
+				rf.votedFor = args.CandidateID
+				reply.Term = args.Term
+				return
+
+			}
 		}
-	} else { // rf.votedFor!=0&&rf.votedFor!=args.CandidateID
-		if rf.currentTerm == args.Term {
-			reply.VoteGranted = false
-			reply.Term = args.Term
-		} else {
-			rf.currentTerm = args.Term
-			reply.VoteGranted = true
-			rf.votedFor = args.CandidateID
-			reply.Term = args.Term
-		}
+
 	}
 
 }
@@ -231,6 +251,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 //
 func (rf *Raft) sendRequestVote(peer int, args *RequestVoteArgs, reply *RequestVoteReply) bool {
 	ok := rf.peers[peer].Call("Raft.RequestVote", args, reply)
+	rf.votereplychan <- reply
 	return ok
 }
 
@@ -250,20 +271,26 @@ type AppendEntriesReply struct {
 	Success bool
 }
 
-func (rf *Raft) AppendEntries(peer int, args *AppendEntriesArgs, reply *AppendEntriesReply) {
+func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) {
+	//fmt.Println("AppendEntries")
+	rf.mux.Lock()
+	defer rf.mux.Unlock()
+
 	if args.Term < rf.currentTerm {
 		reply.Success = false
 		reply.Term = rf.currentTerm
 	}
-	if len(args.Entry) == 0 {
-		reply.Success = true
+	if args.Entry == "" {
 		reply.Term = rf.currentTerm
+		reply.Success = true
 		rf.heatbeat <- args
 	}
 }
 
 func (rf *Raft) sendAppendEntries(peer int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
+	//fmt.Println("SendingAppendRPC")
 	ok := rf.peers[peer].Call("Raft.AppendEntries", args, reply)
+	//rf.heatbeat <- args
 	return ok
 }
 
@@ -344,13 +371,14 @@ func Make(peers []*rpc.ClientEnd, me int, applyCh chan ApplyMsg) *Raft {
 	rf.state = Followers
 	rf.log = make(map[int]*LogEntries)
 	rf.currentTerm = 0
-	rf.votedFor = 0
+	rf.votedFor = -1
 
 	rf.commitIndex = 0
 	rf.lastApplied = 0
 	rf.nextIndex = make([]int, len(peers))
 	rf.matchIndex = make([]int, len(peers))
 
+	rf.heatbeat = make(chan *AppendEntriesArgs)
 	rf.timeoutchan = make(chan bool)
 	rf.votereplychan = make(chan *RequestVoteReply)
 	go rf.MainRoutine()
@@ -361,18 +389,22 @@ func (rf *Raft) MainRoutine() {
 	for {
 		switch rf.state {
 		case Followers:
-			fmt.Println(rf.me,"Followers")
+			//fmt.Println(rf.me,"Followers")
 			quit := false
 			FollowerTimer := time.NewTimer(500 * time.Duration(time.Millisecond))
 			for {
 				select {
 				case heartbeat := <-rf.heatbeat:
+					rf.mux.Lock()
 					if heartbeat.Term > rf.currentTerm {
 						rf.currentTerm = heartbeat.Term
 					}
+					rf.mux.Unlock()
 					FollowerTimer.Reset(500 * time.Duration(time.Millisecond))
 				case <-FollowerTimer.C:
+					rf.mux.Lock()
 					rf.state = Candidates
+					rf.mux.Unlock()
 					quit = true
 					break
 				}
@@ -382,67 +414,91 @@ func (rf *Raft) MainRoutine() {
 			}
 
 		case Leader:
-			fmt.Println(rf.me,"Leader")
+			//fmt.Println(rf.me,"Leader")
 			//LeaderTimer:=time.NewTimer(500*time.Duration(time.Millisecond))
 			heartbeat := &AppendEntriesArgs{
-				Term:         rf.currentTerm,
-				LeaderId:     rf.me,
-				Entry:        "",
-				PrevLogIndex: 0,
-				PrevLogTerm:  0,
-				LeaderCommit: 0,
+				Term:     rf.currentTerm,
+				LeaderId: rf.me,
+				Entry:    "",
 			}
+			//rf.mux.Lock()
 			for index := 0; index < len(rf.peers); index++ {
 				if index != rf.me {
-					var Receiver AppendEntriesReply
-					go rf.sendAppendEntries(index, heartbeat, &Receiver)
+					//fmt.Println("Sending heartbeat1111")
+					var reply AppendEntriesReply
+					//fmt.Println("Leader",rf.me,"Sending heartbeat to",index)
+					go rf.sendAppendEntries(index, heartbeat, &reply)
 				}
 			}
+			//rf.mux.Unlock()
+			time.Sleep(100 * time.Millisecond)
+
 		case Candidates:
-			fmt.Println(rf.me,"Candidate")
+
+			rf.mux.Lock()
+			//fmt.Println(rf.me,"Candidate")
+
 			rf.currentTerm++ //Increment Current Term
-			vote := 1        //Vote for Self!
+			numpeers := len(rf.peers)
+			self := rf.me
+			rf.votedFor = rf.me
+			rf.mux.Unlock()
+
+			vote := 1 //Vote for Self!
+
 			RequestVoteArgs := &RequestVoteArgs{
 				Term:        rf.currentTerm,
 				CandidateID: rf.me,
 			}
+			//Reset Timer
+			var tau int
+			tau = rand.Intn(200) + 400
+			CandidatesTimer := time.NewTimer(time.Duration(tau) * time.Millisecond)
+			quit := false
 
-			for index := 0; index < len(rf.peers); index++ {
-				if index != rf.me {
+			for index := 0; index < numpeers; index++ {
+				if index != self {
 					var RequestVoteReply RequestVoteReply
 					go rf.sendRequestVote(index, RequestVoteArgs, &RequestVoteReply)
 				}
 			}
-			//Reset Timer
-			CandidatesTimer := time.NewTimer(500 * time.Duration(time.Millisecond))
-			quit := false
+
 			for {
 				select {
 				case heartbeat := <-rf.heatbeat:
-					if heartbeat.Term > rf.currentTerm {
-						rf.currentTerm = heartbeat.Term
-						rf.state = Followers
-						quit = true
-						break
-					}
+					//fmt.Println("Candidate",rf.me,"receives heartbeat")
+					rf.mux.Lock()
+					rf.currentTerm = heartbeat.Term
+					rf.state = Followers
+					quit = true
+					rf.mux.Unlock()
+					break
 
 				case RequestVoteReply := <-rf.votereplychan:
-					if RequestVoteReply.Term > rf.currentTerm {
+					rf.mux.Lock()
+					currentTerm := rf.currentTerm
+					rf.mux.Unlock()
+					//fmt.Println("Candidate",rf.me,"receives vote")
+					if RequestVoteReply.Term > currentTerm {
+						rf.mux.Lock()
 						rf.state = Followers
 						rf.currentTerm = RequestVoteReply.Term
+						rf.mux.Unlock()
 						quit = true
 						break
 					} else {
 						if RequestVoteReply.VoteGranted {
 							vote++
 						}
-						if vote > 1/2*len(rf.peers) {
+						//fmt.Println("Candidate",rf.me,"has vote",vote)
+						if vote > len(rf.peers)/2 {
+							rf.mux.Lock()
 							rf.state = Leader
+							rf.mux.Unlock()
 							quit = true
 							break
 						}
 					}
-
 				case <-CandidatesTimer.C:
 					//Timeout
 					//vote=1
@@ -457,4 +513,3 @@ func (rf *Raft) MainRoutine() {
 
 	}
 }
-
