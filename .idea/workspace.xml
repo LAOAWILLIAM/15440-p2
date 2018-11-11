@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c39b6f1-7c1a-4c25-837d-63174ec18337" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/cmu440/rpc/rpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/cmu440/rpc/rpc.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,26 +27,30 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="go" value="5" />
-          <entry key="md" value="1" />
+          <entry key="md" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Go" value="5" />
-          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="PLAIN_TEXT" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="3309" />
+          <entry key="go" value="5258" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
-      <usages-collector id="statistics.go.postfix.template.usages.trigger" />
+      <usages-collector id="statistics.go.postfix.template.usages.trigger">
+        <counts>
+          <entry key=".var" value="1" />
+        </counts>
+      </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="3309" />
+          <entry key="Go" value="5258" />
         </counts>
       </usages-collector>
     </session>
@@ -54,8 +60,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/rpc/rpc.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-164">
-              <caret line="63" column="52" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="52" />
+            <state relative-caret-position="-202">
+              <caret line="92" column="25" selection-start-line="92" selection-start-column="25" selection-end-line="92" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="14" selection-start-line="14" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -63,10 +78,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="274" column="33" lean-forward="true" selection-start-line="274" selection-start-column="33" selection-end-line="274" selection-end-column="33" />
+            <state relative-caret-position="136">
+              <caret line="516" column="40" lean-forward="true" selection-start-line="516" selection-end-line="517" />
               <folding>
-                <element signature="e#747#811#0" expanded="true" />
+                <element signature="e#747#817#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -75,8 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9360">
-              <caret line="529" selection-start-line="529" selection-end-line="529" />
+            <state relative-caret-position="-791">
+              <caret line="76" column="16" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -96,6 +111,10 @@
       <find>RequestVote</find>
       <find>AppendEntries</find>
       <find>heatbeat</find>
+      <find>recei</find>
+      <find>++</find>
+      <find>with term</find>
+      <find>time</find>
     </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
@@ -112,6 +131,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go" />
         <option value="$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go" />
       </list>
     </option>
@@ -123,10 +143,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="4" />
-    <option name="y" value="23" />
-    <option name="width" value="1436" />
-    <option name="height" value="877" />
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -244,7 +262,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Test.TestReElection2AHidden3 in github.com/cmu440/raft">
     <configuration name="TestInitialElection2A in github.com/cmu440/raft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="p2" />
       <working_directory value="$PROJECT_DIR$/src/github.com/cmu440/raft" />
@@ -257,6 +275,54 @@
       <pattern value="^TestInitialElection2A$" />
       <method v="2" />
     </configuration>
+    <configuration name="TestReElection2A in github.com/cmu440/raft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="p2" />
+      <working_directory value="$PROJECT_DIR$/src/github.com/cmu440/raft" />
+      <go_parameters value="-i" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/cmu440/raft" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestReElection2A$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestReElection2AHidden1 in github.com/cmu440/raft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="p2" />
+      <working_directory value="$PROJECT_DIR$/src/github.com/cmu440/raft" />
+      <go_parameters value="-i" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/cmu440/raft" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestReElection2AHidden1$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestReElection2AHidden2 in github.com/cmu440/raft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="p2" />
+      <working_directory value="$PROJECT_DIR$/src/github.com/cmu440/raft" />
+      <go_parameters value="-i" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/cmu440/raft" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestReElection2AHidden2$" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TestReElection2AHidden3 in github.com/cmu440/raft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+      <module name="p2" />
+      <working_directory value="$PROJECT_DIR$/src/github.com/cmu440/raft" />
+      <go_parameters value="-i" />
+      <framework value="gotest" />
+      <kind value="PACKAGE" />
+      <package value="github.com/cmu440/raft" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/" />
+      <pattern value="^TestReElection2AHidden3$" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -266,87 +332,87 @@
       <envs />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Go Test.TestInitialElection2A in github.com/cmu440/raft" />
+      <item itemvalue="Go Test.TestReElection2A in github.com/cmu440/raft" />
+      <item itemvalue="Go Test.TestReElection2AHidden1 in github.com/cmu440/raft" />
+      <item itemvalue="Go Test.TestReElection2AHidden2 in github.com/cmu440/raft" />
+      <item itemvalue="Go Test.TestReElection2AHidden3 in github.com/cmu440/raft" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestReElection2AHidden3 in github.com/cmu440/raft" />
+        <item itemvalue="Go Test.TestReElection2AHidden2 in github.com/cmu440/raft" />
+        <item itemvalue="Go Test.TestReElection2AHidden1 in github.com/cmu440/raft" />
+        <item itemvalue="Go Test.TestReElection2A in github.com/cmu440/raft" />
         <item itemvalue="Go Test.TestInitialElection2A in github.com/cmu440/raft" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 20h 54m 54s.xml">
+    <history-entry file="TestReElection2A_in_github_com_cmu440_raft - 2018.11.05 at 03h 49m 36s.xml">
+      <configuration name="TestReElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestReElection2A_in_github_com_cmu440_raft - 2018.11.05 at 03h 49m 39s.xml">
+      <configuration name="TestReElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestReElection2A_in_github_com_cmu440_raft - 2018.11.05 at 03h 49m 43s.xml">
+      <configuration name="TestReElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestReElection2A_in_github_com_cmu440_raft - 2018.11.05 at 03h 49m 46s.xml">
+      <configuration name="TestReElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestReElection2A_in_github_com_cmu440_raft - 2018.11.05 at 03h 49m 50s.xml">
+      <configuration name="TestReElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.11 at 15h 47m 29s.xml">
       <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 20h 56m 11s.xml">
-      <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestReElection2A_in_github_com_cmu440_raft - 2018.11.11 at 15h 47m 37s.xml">
+      <configuration name="TestReElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 20h 59m 37s.xml">
-      <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestReElection2AHidden1_in_github_com_cmu440_raft - 2018.11.11 at 15h 47m 44s.xml">
+      <configuration name="TestReElection2AHidden1 in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 20h 59m 42s.xml">
-      <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestReElection2AHidden2_in_github_com_cmu440_raft - 2018.11.11 at 15h 47m 52s.xml">
+      <configuration name="TestReElection2AHidden2 in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 21h 00m 29s.xml">
-      <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 21h 07m 19s.xml">
-      <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 21h 08m 39s.xml">
-      <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 21h 08m 59s.xml">
-      <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 21h 23m 56s.xml">
-      <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestInitialElection2A_in_github_com_cmu440_raft - 2018.11.04 at 21h 24m 29s.xml">
-      <configuration name="TestInitialElection2A in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestReElection2AHidden3_in_github_com_cmu440_raft - 2018.11.11 at 15h 48m 01s.xml">
+      <configuration name="TestReElection2AHidden3 in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="4" y="23" width="1436" height="877" extended-state="0" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2625538" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.26180258" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3299363" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32891566" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.40843374" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3299363" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.16942675" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.49518073" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2625538" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.42802548" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Database" order="3" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -387,31 +453,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="22" lean-forward="true" selection-start-line="24" selection-end-line="25" />
+        <state relative-caret-position="252">
+          <caret line="14" selection-start-line="14" selection-end-line="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/rpc/rpc.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-164">
-          <caret line="63" column="52" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="52" />
+        <state relative-caret-position="-202">
+          <caret line="92" column="25" selection-start-line="92" selection-start-column="25" selection-end-line="92" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9360">
-          <caret line="529" selection-start-line="529" selection-end-line="529" />
+        <state relative-caret-position="-791">
+          <caret line="76" column="16" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="274" column="33" lean-forward="true" selection-start-line="274" selection-start-column="33" selection-end-line="274" selection-end-column="33" />
+        <state relative-caret-position="136">
+          <caret line="516" column="40" lean-forward="true" selection-start-line="516" selection-end-line="517" />
           <folding>
-            <element signature="e#747#811#0" expanded="true" />
+            <element signature="e#747#817#0" expanded="true" />
           </folding>
         </state>
       </provider>
