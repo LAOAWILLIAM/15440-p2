@@ -46,13 +46,15 @@ func TestReElection2A(t *testing.T) {
 
 	fmt.Printf("Test (2A): Re-election\n")
 	fmt.Printf("Basic 1 leader\n")
+	//time.Sleep(300)
+	//cfg.checkOneLeader()
 	leader1 := cfg.checkOneLeader()
-
-	// if the leader disconnects, a new one should be elected.
+	//
+	//// if the leader disconnects, a new one should be elected.
 	fmt.Printf("Disconnecting leader\n")
 	cfg.disconnect(leader1)
-
-	// a new leader should be elected
+	//
+	//// a new leader should be elected
 	fmt.Printf("Checking for a new leader\n")
 	cfg.checkOneLeader()
 
@@ -229,11 +231,12 @@ func TestBasicAgree2B(t *testing.T) {
 
 	iters := 3
 	for index := 1; index < iters+1; index++ {
+
 		nd, _ := cfg.nCommitted(index)
 		if nd > 0 {
 			t.Fatalf("Some have committed before Start()")
 		}
-
+		//fmt.Println(index)
 		xindex := cfg.one(index*100, servers)
 		if xindex != index {
 			t.Fatalf("Got index %v but expected %v", xindex, index)
@@ -278,7 +281,7 @@ func TestFailAgree2B(t *testing.T) {
 }
 
 func TestFailNoAgree2B(t *testing.T) {
-	fmt.Printf("==================== 5 SERVERS ====================\n")
+	fmt.Printf("======================= 5 SERVERS ====================\n")
 	servers := 5
 	cfg := make_config(t, servers, false)
 	defer cfg.cleanup()
