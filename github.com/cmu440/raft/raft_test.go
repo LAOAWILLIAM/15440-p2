@@ -46,18 +46,180 @@ func TestReElection2A(t *testing.T) {
 
 	fmt.Printf("Test (2A): Re-election\n")
 	fmt.Printf("Basic 1 leader\n")
+	//time.Sleep(300)
+	//cfg.checkOneLeader()
 	leader1 := cfg.checkOneLeader()
-
-	// if the leader disconnects, a new one should be elected.
+	//
+	//// if the leader disconnects, a new one should be elected.
 	fmt.Printf("Disconnecting leader\n")
 	cfg.disconnect(leader1)
-
-	// a new leader should be elected
+	//
+	//// a new leader should be elected
 	fmt.Printf("Checking for a new leader\n")
 	cfg.checkOneLeader()
 
 	fmt.Printf("======================= END =======================\n\n")
 }
+
+//func TestReElection2AHidden1(t *testing.T) {
+//
+//	//Basic 1 leader
+//	//Disconnecting leader
+//	//Checking for a new leader
+//	//Reconnecting old leader
+//	//Checking current leader
+//	//
+//	//Disconnecting leader + one more peer
+//	//Waiting a bit
+//	//Checking if there is no leader
+//	//Reconnecting disconnected peer
+//	//Checking if there is a leader
+//
+//	fmt.Printf("==================== 3 SERVERS ====================\n")
+//	servers := 3
+//	cfg := make_config(t, servers, false)
+//	defer cfg.cleanup()
+//
+//	fmt.Printf("Test (2A): Hidden1\n")
+//	fmt.Printf("Basic 1 leader\n")
+//	leader1 := cfg.checkOneLeader()
+//	// if the leader disconnects, a new one should be elected.
+//	fmt.Printf("Disconnecting leader\n")
+//	cfg.disconnect(leader1)
+//
+//	// a new leader should be elected
+//	fmt.Printf("Checking for a new leader\n")
+//	cfg.checkOneLeader()
+//	fmt.Printf("Reconnecting old leader\n")
+//	cfg.connect(leader1)
+//	fmt.Printf("Checking current leader\n")
+//	current := cfg.checkOneLeader()
+//
+//	fmt.Printf("Disconnecting leader + one more peer\n")
+//	cfg.disconnect(current)
+//	peer1 := (current + 1) % 3
+//	cfg.disconnect(peer1)
+//	fmt.Printf("wait a bit\n")
+//	time.Sleep(300 * time.Millisecond)
+//	fmt.Printf("Checking if there is no leader\n")
+//	cfg.checkNoLeader()
+//	fmt.Printf("reconnecting old peers\n")
+//	cfg.connect(peer1)
+//	fmt.Printf("Checking if there is a leader\n")
+//	cfg.checkOneLeader()
+//	fmt.Printf("Reconnecting old disconnected leader\n")
+//	cfg.connect(current)
+//	fmt.Printf("Checking current leader\n")
+//	cfg.checkOneLeader()
+//
+//	fmt.Printf("======================= END =======================\n\n")
+//}
+//
+//func TestReElection2AHidden2(t *testing.T) {
+//
+//	//Basic 1 leader
+//	//Disconnecting leader
+//	//Checking for a new leader
+//	//Reconnecting old leader
+//	//Checking current leader
+//	//
+//	//Disconnecting leader + one more peer
+//	//Waiting a bit
+//	//Checking if there is no leader
+//	//Reconnecting disconnected peer
+//	//Checking if there is a leader
+//
+//	fmt.Printf("==================== 3 SERVERS ====================\n")
+//	servers := 3
+//	cfg := make_config(t, servers, false)
+//	defer cfg.cleanup()
+//
+//	fmt.Printf("Test (2A): Hidden2\n")
+//	fmt.Printf("Basic 1 leader\n")
+//	leader1 := cfg.checkOneLeader()
+//	// if the leader disconnects, a new one should be elected.
+//	fmt.Printf("Disconnecting leader\n")
+//	cfg.disconnect(leader1)
+//	// a new leader should be elected
+//	fmt.Printf("Checking for a new leader\n")
+//	cfg.checkOneLeader()
+//	fmt.Printf("Reconnecting old leader\n")
+//	cfg.connect(leader1)
+//	fmt.Printf("Checking current leader\n")
+//	current := cfg.checkOneLeader()
+//
+//	fmt.Printf("Disconnecting leader + one more peer\n")
+//	cfg.disconnect(current)
+//	peer1 := (current + 1) % 3
+//	cfg.disconnect(peer1)
+//	fmt.Printf("wait a bit\n")
+//	time.Sleep(300 * time.Millisecond)
+//	fmt.Printf("Checking if there is no leader\n")
+//	cfg.checkNoLeader()
+//	fmt.Printf("reconnecting old peers\n")
+//	cfg.connect(peer1)
+//	fmt.Printf("Checking if there is a leader\n")
+//	cfg.checkOneLeader()
+//	fmt.Printf("Reconnecting old disconnected leader\n")
+//	cfg.connect(current)
+//	fmt.Printf("Checking current leader\n")
+//	cfg.checkOneLeader()
+//
+//	fmt.Printf("======================= END =======================\n\n")
+//}
+//
+//func TestReElection2AHidden3(t *testing.T) {
+//
+//	//Basic 1 leader
+//	//Disconnecting leader
+//	//Checking for a new leader
+//	//Reconnecting old leader
+//	//Checking current leader
+//	//
+//	//Disconnecting leader + one more peer
+//	//Waiting a bit
+//	//Checking if there is no leader
+//	//Reconnecting disconnected peer
+//	//Checking if there is a leader
+//
+//	fmt.Printf("==================== 3 SERVERS ====================\n")
+//	servers := 3
+//	cfg := make_config(t, servers, false)
+//	defer cfg.cleanup()
+//
+//	fmt.Printf("Test (2A): Hidden3\n")
+//	fmt.Printf("Basic 1 leader\n")
+//	leader1 := cfg.checkOneLeader()
+//	// if the leader disconnects, a new one should be elected.
+//	fmt.Printf("Disconnecting leader\n")
+//	cfg.disconnect(leader1)
+//	// a new leader should be elected
+//	fmt.Printf("Checking for a new leader\n")
+//	cfg.checkOneLeader()
+//	fmt.Printf("Reconnecting old leader\n")
+//	cfg.connect(leader1)
+//	fmt.Printf("Checking current leader\n")
+//	current := cfg.checkOneLeader()
+//
+//	fmt.Printf("Disconnecting leader + one more peer\n")
+//	cfg.disconnect(current)
+//	peer1 := (current + 1) % 3
+//	cfg.disconnect(peer1)
+//	fmt.Printf("wait a bit\n")
+//	time.Sleep(300 * time.Millisecond)
+//	fmt.Printf("Checking if there is no leader\n")
+//	cfg.checkNoLeader()
+//	fmt.Printf("reconnecting old peers\n")
+//	cfg.connect(peer1)
+//	fmt.Printf("Checking if there is a leader\n")
+//	cfg.checkOneLeader()
+//	fmt.Printf("Reconnecting old disconnected leader\n")
+//	cfg.connect(current)
+//	fmt.Printf("Checking current leader\n")
+//	cfg.checkOneLeader()
+//
+//	fmt.Printf("======================= END =======================\n\n")
+//}
 
 func TestBasicAgree2B(t *testing.T) {
 	fmt.Printf("==================== 5 SERVERS ====================\n")
@@ -69,11 +231,12 @@ func TestBasicAgree2B(t *testing.T) {
 
 	iters := 3
 	for index := 1; index < iters+1; index++ {
+
 		nd, _ := cfg.nCommitted(index)
 		if nd > 0 {
 			t.Fatalf("Some have committed before Start()")
 		}
-
+		//fmt.Println(index)
 		xindex := cfg.one(index*100, servers)
 		if xindex != index {
 			t.Fatalf("Got index %v but expected %v", xindex, index)
@@ -118,7 +281,7 @@ func TestFailAgree2B(t *testing.T) {
 }
 
 func TestFailNoAgree2B(t *testing.T) {
-	fmt.Printf("==================== 5 SERVERS ====================\n")
+	fmt.Printf("======================= 5 SERVERS ====================\n")
 	servers := 5
 	cfg := make_config(t, servers, false)
 	defer cfg.cleanup()
