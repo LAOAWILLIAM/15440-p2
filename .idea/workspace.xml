@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c39b6f1-7c1a-4c25-837d-63174ec18337" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/github.com/cmu440/raft/dbgprint.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/cmu440/raft.tar" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/cmu440/raft.tar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/github.com/cmu440/rpc/rpc.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/cmu440/rpc/rpc.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +17,7 @@
     <session id="750552001">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.4" value="1" />
@@ -27,19 +26,19 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="go" value="7" />
+          <entry key="go" value="9" />
           <entry key="md" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="7" />
+          <entry key="Go" value="9" />
           <entry key="PLAIN_TEXT" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="12515" />
+          <entry key="go" value="13223" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -52,7 +51,7 @@
       <usages-collector id="statistics.vcs.git.usages" />
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="12515" />
+          <entry key="Go" value="13223" />
         </counts>
       </usages-collector>
     </session>
@@ -62,8 +61,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-202">
-              <caret line="14" selection-start-line="14" selection-end-line="15" />
+            <state relative-caret-position="792">
+              <caret line="44" column="7" lean-forward="true" selection-start-line="44" selection-start-column="7" selection-end-line="44" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -77,20 +76,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4413">
-              <caret line="254" column="16" selection-start-line="254" selection-start-column="16" selection-end-line="254" selection-end-column="16" />
+            <state relative-caret-position="18">
+              <caret line="445" selection-start-line="445" selection-end-line="445" />
+              <folding>
+                <element signature="e#14#205#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
-              <caret line="176" column="12" selection-start-line="176" selection-start-column="12" selection-end-line="176" selection-end-column="12" />
+            <state relative-caret-position="265">
+              <caret line="728" column="25" selection-start-line="728" selection-start-column="25" selection-end-line="728" selection-end-column="25" />
               <folding>
                 <element signature="e#747#817#0" expanded="true" />
               </folding>
@@ -118,13 +120,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>with log:</find>
-      <find>Sending heartbeat to</find>
-      <find>sending A</find>
-      <find>cont</find>
-      <find>continue</find>
-      <find>Changed commitIndex</find>
-      <find>apply error</find>
       <find>Found the Sync point</find>
       <find>Changed Next&amp;Match</find>
       <find>contain PrevLogIndex</find>
@@ -148,6 +143,13 @@
       <find>start</find>
       <find>fmt</find>
       <find>count</find>
+      <find>--</find>
+      <find>1</find>
+      <find>aaa</find>
+      <find>aaaa</find>
+      <find>nextIndex</find>
+      <find>.Index</find>
+      <find>nextIndex[</find>
     </findStrings>
   </component>
   <component name="GOROOT" path="/usr/local/go" />
@@ -165,8 +167,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/github.com/cmu440/raft/dbgprint.go" />
-        <option value="$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go" />
         <option value="$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go" />
+        <option value="$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go" />
       </list>
     </option>
   </component>
@@ -274,6 +276,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///usr/local/go/src/runtime/slice.go" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="false" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
@@ -299,8 +302,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestFailNoAgree2B in github.com/cmu440/raft">
-    <configuration name="TestBasicAgree2B in github.com/cmu440/raft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Test.TestBackup2B in github.com/cmu440/raft">
+    <configuration name="TestBackup2B in github.com/cmu440/raft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="p2" />
       <working_directory value="$PROJECT_DIR$/src/github.com/cmu440/raft" />
       <go_parameters value="-i" />
@@ -309,7 +312,7 @@
       <package value="github.com/cmu440/raft" />
       <directory value="$PROJECT_DIR$/" />
       <filePath value="$PROJECT_DIR$/" />
-      <pattern value="^TestBasicAgree2B$" />
+      <pattern value="^TestBackup2B$" />
       <method v="2" />
     </configuration>
     <configuration name="TestConcurrentStarts2B in github.com/cmu440/raft" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
@@ -370,52 +373,52 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Go Test.TestFailAgree2B in github.com/cmu440/raft" />
       <item itemvalue="Go Test.TestReElection2AHidden3 in github.com/cmu440/raft" />
-      <item itemvalue="Go Test.TestBasicAgree2B in github.com/cmu440/raft" />
       <item itemvalue="Go Test.TestFailNoAgree2B in github.com/cmu440/raft" />
       <item itemvalue="Go Test.TestConcurrentStarts2B in github.com/cmu440/raft" />
+      <item itemvalue="Go Test.TestBackup2B in github.com/cmu440/raft" />
+      <item itemvalue="Go Test.TestFailAgree2B in github.com/cmu440/raft" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Test.TestBackup2B in github.com/cmu440/raft" />
+        <item itemvalue="Go Test.TestFailAgree2B in github.com/cmu440/raft" />
         <item itemvalue="Go Test.TestFailNoAgree2B in github.com/cmu440/raft" />
         <item itemvalue="Go Test.TestConcurrentStarts2B in github.com/cmu440/raft" />
         <item itemvalue="Go Test.TestReElection2AHidden3 in github.com/cmu440/raft" />
-        <item itemvalue="Go Test.TestBasicAgree2B in github.com/cmu440/raft" />
-        <item itemvalue="Go Test.TestFailAgree2B in github.com/cmu440/raft" />
       </list>
     </recent_temporary>
   </component>
   <component name="TestHistory">
-    <history-entry file="TestConcurrentStarts2B_in_github_com_cmu440_raft - 2018.11.13 at 16h 04m 32s.xml">
-      <configuration name="TestConcurrentStarts2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="TestFailAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 16h 11m 14s.xml">
+    <history-entry file="TestFailAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 21h 44m 55s.xml">
       <configuration name="TestFailAgree2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestFailAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 16h 16m 57s.xml">
+    <history-entry file="TestFailAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 21h 45m 37s.xml">
       <configuration name="TestFailAgree2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestFailNoAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 16h 17m 15s.xml">
-      <configuration name="TestFailNoAgree2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestFailAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 21h 46m 15s.xml">
+      <configuration name="TestFailAgree2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestBasicAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 16h 17m 48s.xml">
-      <configuration name="TestBasicAgree2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestFailAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 22h 15m 08s.xml">
+      <configuration name="TestFailAgree2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestReElection2AHidden3_in_github_com_cmu440_raft - 2018.11.13 at 16h 17m 56s.xml">
-      <configuration name="TestReElection2AHidden3 in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestBackup2B_in_github_com_cmu440_raft - 2018.11.13 at 22h 16m 09s.xml">
+      <configuration name="TestBackup2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestConcurrentStarts2B_in_github_com_cmu440_raft - 2018.11.13 at 16h 18m 10s.xml">
-      <configuration name="TestConcurrentStarts2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestBackup2B_in_github_com_cmu440_raft - 2018.11.13 at 22h 19m 48s.xml">
+      <configuration name="TestBackup2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestFailNoAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 16h 18m 21s.xml">
-      <configuration name="TestFailNoAgree2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestBackup2B_in_github_com_cmu440_raft - 2018.11.13 at 22h 21m 14s.xml">
+      <configuration name="TestBackup2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestFailNoAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 16h 19m 23s.xml">
-      <configuration name="TestFailNoAgree2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestBackup2B_in_github_com_cmu440_raft - 2018.11.13 at 22h 22m 27s.xml">
+      <configuration name="TestBackup2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
-    <history-entry file="TestFailNoAgree2B_in_github_com_cmu440_raft - 2018.11.13 at 16h 23m 57s.xml">
-      <configuration name="TestFailNoAgree2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    <history-entry file="TestBackup2B_in_github_com_cmu440_raft - 2018.11.13 at 22h 23m 21s.xml">
+      <configuration name="TestBackup2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="TestBackup2B_in_github_com_cmu440_raft - 2018.11.13 at 22h 27m 54s.xml">
+      <configuration name="TestBackup2B in github.com/cmu440/raft" configurationId="GoTestRunConfiguration" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -444,7 +447,7 @@
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.0" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.5057325" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -504,8 +507,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-202">
-          <caret line="14" selection-start-line="14" selection-end-line="15" />
+        <state relative-caret-position="792">
+          <caret line="44" column="7" lean-forward="true" selection-start-line="44" selection-start-column="7" selection-end-line="44" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -516,19 +519,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go">
+    <entry file="file:///usr/local/go/src/runtime/slice.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4413">
-          <caret line="254" column="16" selection-start-line="254" selection-start-column="16" selection-end-line="254" selection-end-column="16" />
+        <state relative-caret-position="121">
+          <caret line="220" selection-start-line="220" selection-end-line="220" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/raft/raft.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="176" column="12" selection-start-line="176" selection-start-column="12" selection-end-line="176" selection-end-column="12" />
+        <state relative-caret-position="265">
+          <caret line="728" column="25" selection-start-line="728" selection-start-column="25" selection-end-line="728" selection-end-column="25" />
           <folding>
             <element signature="e#747#817#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/github.com/cmu440/raft/raft_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="445" selection-start-line="445" selection-end-line="445" />
+          <folding>
+            <element signature="e#14#205#0" expanded="true" />
           </folding>
         </state>
       </provider>

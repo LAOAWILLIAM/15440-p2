@@ -31,6 +31,7 @@ package raft
 //
 
 import (
+	"fmt"
 	"math/rand"
 	"sync"
 	"time"
@@ -189,8 +190,9 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 			if uptodate && rf.state == Followers {
 				if rf.votedFor == -1 || rf.votedFor == args.CandidateID {
 					//fmt.Println("Server",rf.me,"with Term:",rf.currentTerm,"B_VOTE",args.CandidateID)
-					rf.votedFor = args.CandidateID
 					reply.VoteGranted = true
+					rf.votedFor = args.CandidateID
+
 					rf.FollowerReceiveReply <- 1
 				}
 			}
@@ -207,8 +209,9 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 				rf.votedFor = -1
 				//fmt.Println("Server",rf.me,"with Term:",rf.currentTerm,"A_VOTE",args.CandidateID)
 			} else {
-				rf.votedFor = args.CandidateID
 				reply.VoteGranted = true
+				rf.votedFor = args.CandidateID
+
 			}
 			rf.FollowerReceiveReply <- 1
 			return
@@ -281,8 +284,9 @@ type AppendEntriesArgs struct {
 
 type AppendEntriesReply struct {
 	// Your data here (2A)
-	Term    int
-	Success bool
+	Term      int
+	Success   bool
+	nextIndex int
 }
 
 func remove(slice []LogEntries, s int) []LogEntries {
@@ -298,12 +302,22 @@ func Min(a int, b int) int {
 	}
 }
 
+func (rf *Raft) findFirstIndex(initialindex int, term int) int {
+	for i := initialindex; i > 0; i-- {
+		if rf.log[i].Term <= term {
+			return i
+		}
+	}
+	return 1
+}
+
 func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) {
 	rf.mux.Lock()
 	defer rf.mux.Unlock()
 	if args.Term < rf.currentTerm {
 		reply.Success = false
 		reply.Term = rf.currentTerm
+		reply.nextIndex = -1
 		return
 	}
 
@@ -312,6 +326,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		reply.Term = rf.currentTerm
 		reply.Success = false
 		rf.heatbeat <- args
+		reply.nextIndex = -1
 		//fmt.Println(rf.me,"receives empty heartbeats reply done")
 		return
 	}
@@ -324,6 +339,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 			//Does Not Conatin
 			reply.Term = rf.currentTerm
 			reply.Success = false
+			reply.nextIndex = rf.findFirstIndex(len(rf.log)-1, args.PrevLogTerm)
+			//fmt.Println(reply.nextIndex)
 			//return
 		}
 		if len(rf.log) > args.PrevLogIndex {
@@ -332,6 +349,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 				//fmt.Println(rf.me,"with log:",rf.log,"Miss Match PrevLogIndex")
 				reply.Success = false
 				reply.Term = rf.currentTerm
+				reply.nextIndex = rf.findFirstIndex(len(rf.log)-1, args.PrevLogTerm)
+				fmt.Println(reply.nextIndex)
 				//delete
 				rf.log = rf.log[:args.PrevLogIndex]
 			} else { //args.PrevLogTerm==rf.log[args.PrevLogIndex].term
@@ -339,7 +358,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 				//fmt.Println(rf.me,"with log:",rf.log,"Found the Sync point ")
 				reply.Term = rf.currentTerm
 				reply.Success = true
-
+				reply.nextIndex = -1
 				//Append Everything!
 				rf.log = append(rf.log[:args.PrevLogIndex], args.Entry[args.PrevLogIndex:]...)
 			}
@@ -365,18 +384,22 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 func (rf *Raft) sendAppendEntries(applyCh chan ApplyMsg, peer int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
 	//fmt.Println("SendingAppendRPC")
-	rf.mux.Lock()
-	target := rf.peers[peer]
-	rf.mux.Unlock()
-	ok := target.Call("Raft.AppendEntries", args, reply)
+
+	ok := rf.peers[peer].Call("Raft.AppendEntries", args, reply)
 
 	if reply.Success == false { //If AppendEntries fails because of log inconsistency: decrement nextIndex and retry (§5.3)
 		if reply.Term <= args.Term {
 			rf.mux.Lock()
-			if rf.nextIndex[peer] > 0 {
-				rf.nextIndex[peer]--
-				//rf.FollowerReceiveReply<-1
+			//if rf.nextIndex[peer] > 0 {
+			//	if reply.nextIndex!=-1{
+			if reply.nextIndex != -1 {
+				rf.nextIndex[peer] = reply.nextIndex
 			}
+			//}else{
+			//	rf.nextIndex[peer]--
+			//}
+			//
+			//}
 			rf.mux.Unlock()
 		}
 	} else { //reply.Success==true
@@ -696,7 +719,7 @@ func (rf *Raft) MainRoutine(applyCh chan ApplyMsg) {
 					//	fmt.Println("Leader",rf.me,"Sending ApplyMSG with Index:",i)
 					//	applyCh<-msg
 					//}
-					time.Sleep(100 * time.Millisecond)
+					time.Sleep(80 * time.Millisecond)
 					//fmt.Println(rf.me,"4")
 				}
 
